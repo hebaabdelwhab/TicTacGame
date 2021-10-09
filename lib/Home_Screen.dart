@@ -54,24 +54,61 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-
+            Expanded(
+              child: GridView.count(
+                padding: const EdgeInsets.all(16),
+                crossAxisCount: 3,
+                mainAxisSpacing: 8.0,
+                crossAxisSpacing: 8.0,
+                childAspectRatio: 1.0,
+                children: List.generate(
+                  9,
+                  (index) => InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap:gameOver?null:()=>_onTap(index),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).shadowColor,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child:const Center(
+                        child:  Text(
+                          'x',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 52,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             ElevatedButton.icon(
-                onPressed: () {
-                  setState(() {
-                     activePlayer = 'X';
-                     gameOver = false;
-                     turn = 0;
-                     result = '';
-                     game = Game();
-                     isSwitched = false;
-                  });
-                },
-                icon: const Icon(Icons.replay),
-                label: const Text('Repeat the game'),
-                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Theme.of(context).splashColor)),),
+              onPressed: () {
+                setState(() {
+                  activePlayer = 'X';
+                  gameOver = false;
+                  turn = 0;
+                  result = '';
+                  game = Game();
+                  isSwitched = false;
+                });
+              },
+              icon: const Icon(Icons.replay),
+              label: const Text('Repeat the game'),
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Theme.of(context).splashColor)),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  _onTap(int index) {
+    game.playGame(index ,activePlayer);
   }
 }
