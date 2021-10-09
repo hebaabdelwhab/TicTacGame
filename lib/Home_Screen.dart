@@ -19,7 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme
+          .of(context)
+          .primaryColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -63,31 +65,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 childAspectRatio: 1.0,
                 children: List.generate(
                   9,
-                  (index) => InkWell(
-                    borderRadius: BorderRadius.circular(16),
-                    onTap:gameOver?null:()=>_onTap(index),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).shadowColor,
+                      (index) =>
+                      InkWell(
                         borderRadius: BorderRadius.circular(16),
-                      ),
-                      child:const Center(
-                        child:  Text(
-                          'x',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 52,
+                        onTap: gameOver ? null : () => _onTap(index),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme
+                                .of(context)
+                                .shadowColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Center(
+                            child: Text(
+                              Player.playerX.contains(index) ? 'x' : Player
+                                  .playerO.contains(index) ? 'O':'',
+                              style: TextStyle(
+                                color: Player.playerX.contains(index) ? Colors
+                                    .blue : Colors.pink,
+                                fontSize: 52,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
                 ),
               ),
             ),
             ElevatedButton.icon(
               onPressed: () {
                 setState(() {
+                  Player.playerX = [];
+                  Player.playerO = [];
                   activePlayer = 'X';
                   gameOver = false;
                   turn = 0;
@@ -100,15 +109,22 @@ class _HomeScreenState extends State<HomeScreen> {
               label: const Text('Repeat the game'),
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(Theme.of(context).splashColor)),
+                  MaterialStateProperty.all(Theme
+                      .of(context)
+                      .splashColor)),
             ),
           ],
         ),
       ),
     );
   }
-
-  _onTap(int index) {
-    game.playGame(index ,activePlayer);
+  _onTap(int index) async {
+    game.playGame(index, activePlayer);
+    updateState();
+  }
+  void updateState() {
+    setState(() {
+      activePlayer = (activePlayer=='X')?'O':'X';
+    });
   }
 }
