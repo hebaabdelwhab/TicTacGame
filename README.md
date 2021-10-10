@@ -1,4 +1,4 @@
-# course
+# TicTacGame
 
 A new Flutter project.
 
