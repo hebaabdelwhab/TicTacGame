@@ -119,8 +119,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
   _onTap(int index) async {
-    game.playGame(index, activePlayer);
-    updateState();
+    if((Player.playerX.isEmpty||!Player.playerX.contains(index))&&(!Player.playerO.isEmpty||!Player.playerO.contains(index))){
+      game.playGame(index, activePlayer);
+      updateState();
+      if(!isSwitched && !gameOver)
+        {
+          await game.autoPlay(activePlayer);
+          updateState();
+        }
+    }
   }
   void updateState() {
     setState(() {

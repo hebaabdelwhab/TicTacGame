@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Player{
     static const x = 'X';
     static const o = 'O';
@@ -17,5 +19,18 @@ class Game{
       }
   }
   checkWinner(){}
-  autoPlay(){}
+  Future<void> autoPlay(activePlayer)async {
+    int index =0 ;
+    List<int> emptyCell = [];
+    for(var i =0 ; i<9 ;i++){
+        if(!(Player.playerX.contains(i)||Player.playerO.contains(i)))
+          {
+            emptyCell.add(i);
+          }
+    }
+    Random random = Random();
+    int randomIndex = random.nextInt(emptyCell.length);
+    index = emptyCell[randomIndex];
+    playGame(index, activePlayer);
+  }
 }
